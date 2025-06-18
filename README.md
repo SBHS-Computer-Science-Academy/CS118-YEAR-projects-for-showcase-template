@@ -1,2 +1,2 @@
-# Class-Year-projects-for-showcase-template
-https://sbhs-computer-science-academy.github.io/Class-YY-YY-projects-for-showcase/
+# CS118-YEAR-projects-for-showcase-template
+put link to site here after publishing it on GitHub pages
