@@ -8,7 +8,7 @@ var projects = [
 
 function generateCard(title, slidesUrl, filePrefix) {
     const encodedSlides = encodeURIComponent(slidesUrl);
-    const encodedNotebook = encodeURIComponent("notebooks/" + filePrefix + ".html");
+    const encodedNotebook = encodeURIComponent("notebooks/" + filePrefix + ".pdf");
 	const image = "images/" + filePrefix + ".png"
 
     return `
