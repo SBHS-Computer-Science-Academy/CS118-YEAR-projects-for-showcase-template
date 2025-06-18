@@ -1,6 +1,8 @@
 # CS118-YEAR-projects-for-showcase-template
 put link to site here after publishing it on GitHub pages
 
+Note that the pdf files won't load when testing the site locally. To view them, view the site on GitHub Pages.
+
 To embed the Google slides in presentation mode, you need to use the presentation mode embed URL.
 
 ## How to Get the Presentation-Mode Embed URL for Google Slides
