@@ -1,64 +1,43 @@
-// Each name should be in the format "Stu1, Stu2, and Stu3" with an optional URL
-var names = [
-    ["CSA_logo", "https://www.sbhscs.org"]
+// Each name should be in the format "Stu1, Stu2, and Stu3" with a URL for the student's Google slides
+var projects = [
+    ["Student 1", 
+     "https://docs.google.com/presentation/d/e/2PACX-1vQ3am9IzsdhSoA0o8wRVU9b-5tRMiGWcib2-odPmYpTlsJppfUW_DeMaWvgQ3gv1tsX6w_pfF_4BnIv/pubembed?start=false&loop=false&delayms=5000"],
+    ["Student 2 and Student 3", 
+     "https://docs.google.com/presentation/d/another-slide-id/embed"]
 ];
 
-var gridWidth = 4;
-var gridHtml = "";
-var idx = 0;
+function generateCard(title, slidesUrl, filePrefix) {
+    const encodedSlides = encodeURIComponent(slidesUrl);
+    const encodedNotebook = encodeURIComponent("notebooks/" + filePrefix + ".html");
+	const image = "images/" + filePrefix + ".png"
 
-makeGrid();
-
-function generateCard(names, imageName, altText, url)
-{
-    return '<div class="card text-center"> <div class="card-body"> <h5 class="card-title">'
-    + names
-    + '</h5> <p class="card-text"> <a href="'
-    + url
-    + '" target="_blank" rel="noopener noreferrer"> <img src="images/'
-    + imageName
-    + '" alt="'
-    + altText
-    + '" class="screenshots"> </a> </p> </div> </div>';
+    return `
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+        	<div class="card-body">
+                <h5 class="card-title text-center">${title}</h5>
+            </div>
+            <a href="project.html?slides=${encodedSlides}&notebook=${encodedNotebook}" target="_blank">
+                <img src="${image}" class="card-img-top" alt="First slide preview for ${title}" style="object-fit:cover; aspect-ratio:16/9;">
+            </a>
+        </div>
+    </div>`;
 }
 
-function makeCard() {
-    if (idx >= names.length) return;
-    var name = names[idx];
-    var fileUrl = "";
-    if (name.constructor === Array) {
-    	name = names[idx][0];
-    	fileUrl = names[idx][1];
-    }
-    var file = name.replaceAll(" ","").replaceAll(",","").replace("and","");
-    var imageName = file + ".png"
+function renderProjects() {
+    const grid = document.getElementById('grid');
+    let html = '<div class="row">';
     
-    if (fileUrl != "") file = fileUrl;
-    var card = generateCard(name, imageName, name, file);
-    gridHtml += card; //not elegant, but it works
+    projects.forEach(project => {
+        var name = project[0];
+        var slidesUrl = project[1];
+        var filePrefix = name.replace(" and ","").replaceAll(" ","").replaceAll(",","");
+        html += generateCard(name, slidesUrl, filePrefix);
+    });
     
-    idx++;
+    html += '</div>';
+    grid.innerHTML = html;
 }
 
-
-function makeGrid() {
-    
-    for (var i = 0; i < names.length; i++) {
-        if (i % gridWidth == 0) {
-            gridHtml += '<div class="row">';
-        }
-        gridHtml += '<div class="col-md-3 p-3">';
-        makeCard();
-        gridHtml += '</div>';
-        if (i % gridWidth == (gridWidth - 1)) {
-            gridHtml += '</div>';
-        }
-    }
-    
-    if (names.length % gridWidth != 0) {
-        gridHtml += '</div>';
-    }
-    
-    document.getElementById("grid").innerHTML += gridHtml;
-    
-}
+// Initialize on load
+document.addEventListener('DOMContentLoaded', renderProjects);
